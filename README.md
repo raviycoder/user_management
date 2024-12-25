@@ -36,8 +36,8 @@ Follow these steps to run the project locally:
 1. **Clone the Repository**
 
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git https://github.com/raviycoder/user_management.git
+   cd user_management
    ```
 
 2. **Install Dependencies**
