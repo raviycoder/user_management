@@ -1,36 +1,178 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Data Table Component with React Table & React Query
 
-## Getting Started
+## 📝 Project Summary
 
-First, run the development server:
+This project demonstrates a fully functional and customizable **Data Table** built using **React Table** (`@tanstack/react-table`). The component supports:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Sorting**: Allows sorting data by columns.
+- **Pagination**: Enables navigation through data pages.
+- **Filtering**: Includes global and column-specific filtering.
+- **Dynamic Rendering**: Renders table headers, body, and rows dynamically using `flexRender`.
+
+The table is styled using custom UI components and can easily be integrated into any React-based project.
+
+---
+
+## 🚀 Features
+
+- **Dynamic Table Rendering**: Handles a variety of data structures and column definitions.
+- **Search Functionality**: Global search input for filtering rows.
+- **Pagination**: Built-in pagination for better navigation of large datasets.
+- **Customizable**: Easily extendable to meet specific project requirements.
+
+---
+
+## 🛠️ Installation and Setup
+
+Follow these steps to run the project locally:
+
+### Prerequisites
+
+- Node.js (>= 16.x)
+- npm (>= 7.x) or yarn (>= 1.x)
+
+### Steps to Run Locally
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone <repository-url>
+   cd <repository-folder>
+   ```
+
+2. **Install Dependencies**
+
+   Use your package manager of choice:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Start the Development Server**
+
+   Run the following command to start the project locally:
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. **Access the Application**
+
+   Open your browser and navigate to:
+
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+## 📂 Project Structure
+
+Here's an overview of the important files and folders:
+
+```plaintext
+src/
+├── components/
+│   ├── providers/
+│   │   ├── Tanstack.tsx       # Tanstack Query component
+│   ├── table/
+│   │   ├── Pagination.tsx     # Pagination component
+│   ├── ui/
+│   │   ├── input.tsx          # Input component for search
+│   │   ├── table.tsx          # Table UI components
+├── hooks/
+│   ├── useUsers.ts            # Custom hook for fetching and managing user data
+├── app/
+│   ├── types/
+│   │   ├── user.ts            # Types of user data
+│   ├── users/
+│   │   ├── columns.tsx        # Column of user
+│   │   ├── data-table.tsx     # Table of user data
+│   │   ├── page.tsx           # Page of user data
+│   ├── globals.tsx               
+│   ├── layout.tsx             
+│   ├── page.tsx               # Main entry point for User Data
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧪 Example Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Data
 
-## Learn More
+Here’s an example of the data structure used by the table:
 
-To learn more about Next.js, take a look at the following resources:
+```typescript
+interface User {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  address: {
+    street: string;
+    suite: string;
+    city: string;
+    zipcode: string;
+  };
+  phone: string;
+  website: string;
+  company: {
+    name: string;
+    catchPhrase: string;
+    bs: string;
+  };
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Component Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To use the `DataTable` component in your project:
 
-## Deploy on Vercel
+```tsx
+import { DataTable } from "@/components/table/DataTable";
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+const columns: ColumnDef<User, any>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "address.city",
+    header: "City",
+  },
+];
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+const data: User[] = [
+  {
+    id: 1,
+    name: "Leanne Graham",
+    username: "Bret",
+    email: "Sincere@april.biz",
+    address: {
+      street: "Kulas Light",
+      suite: "Apt. 556",
+      city: "Gwenborough",
+      zipcode: "92998-3874",
+    },
+    phone: "1-770-736-8031 x56442",
+    website: "hildegard.org",
+    company: {
+      name: "Romaguera-Crona",
+      catchPhrase: "Multi-layered client-server neural-net",
+      bs: "harness real-time e-markets",
+    },
+  },
+];
+
+export default function App() {
+  return <DataTable columns={columns} data={data} />;
+}
+```
